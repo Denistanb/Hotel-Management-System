@@ -1,0 +1,453 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="booking-header">
+        <h1 class="text-center">Book Your Luxury Experience</h1>
+        <p class="text-center lead">Indulge in unparalleled comfort and elegance</p>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="booking-card">
+                    <div class="row g-0">
+                        <div class="col-md-5 booking-image-container d-none d-md-block">
+                            <div class="booking-image"></div>
+                            <div class="booking-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Free WiFi</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-swimming-pool"></i>
+                                    <span>Pool Access</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Gourmet Dining</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-concierge-bell"></i>
+                                    <span>24/7 Service</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="booking-form-container">
+                                <h2 class="text-center mb-4">Reserve Your Stay</h2>
+                                <form method="POST" action="{{ url_for('booking') }}" class="booking-form">
+                                    {% if session['user_id'] %}
+                                    <!-- Display logged-in user information -->
+                                    <input type="hidden" name="name" value="{{ session['user_name'] }}">
+                                    <input type="hidden" name="email" value="{{ session['user_email'] }}">
+                                    <input type="hidden" name="phone" value="{{ session['user_phone'] }}">
+                                    {% else %}
+                                    <!-- Guest Information (only shown if not logged in) -->
+                                    <div class="mb-4 form-section">
+                                        <h4 class="section-title">Guest Information</h4>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-3">
+                                                <label for="name" class="form-label">Full Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                    <input type="text" class="form-control" id="name" name="name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="email" class="form-label">Email Address</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    <input type="email" class="form-control" id="email" name="email" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="phone" class="form-label">Phone Number</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- Room Details -->
+                                    <div class="mb-4 form-section">
+                                        <h4 class="section-title">Room Details</h4>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="room_type" class="form-label">Room Type</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-bed"></i></span>
+                                                    <select class="form-select" id="room_type" name="room_type" required>
+                                                        <option value="standard">Standard Room</option>
+                                                        <option value="deluxe">Deluxe Room</option>
+                                                        <option value="suite">Luxury Suite</option>
+                                                        <option value="presidential">Presidential Suite</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bed_type" class="form-label">Bed Type</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-bed"></i></span>
+                                                    <select class="form-select" id="bed_type" name="bed_type" required>
+                                                        <option value="single">Single Bed</option>
+                                                        <option value="double">Double Bed</option>
+                                                        <option value="twin">Twin Beds</option>
+                                                        <option value="king">King Size</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="num_persons" class="form-label">Number of Guests</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                    <input type="number" class="form-control" id="num_persons" name="num_persons" min="1" max="4" value="2" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="check_in" class="form-label">Check-in Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                                    <input type="date" class="form-control" id="check_in" name="check_in" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="check_out" class="form-label">Check-out Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
+                                                    <input type="date" class="form-control" id="check_out" name="check_out" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Room Availability Status -->
+                                    <div id="room_availability_status" class="mb-4">
+                                        <p class="text-danger" id="availability_message"></p>
+                                    </div>
+
+                                    <!-- Complete Your Booking Section with Image -->
+                                    <div class="mb-4 form-section complete-booking-section">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="complete-booking-image-container">
+                                                    <img src="https://images.unsplash.com/photo-1551918120-9739cb430c6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Luxury Room" class="complete-booking-image">
+                                                    <div class="image-overlay">
+                                                        <span><i class="fas fa-check-circle"></i> Best Price Guarantee</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h4 class="section-title">Complete Your Booking</h4>
+                                                <div class="mb-3">
+                                                    <label for="special_requests" class="form-label">Special Requests</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
+                                                        <textarea class="form-control" id="special_requests" name="special_requests" rows="3" placeholder="Any special requests or requirements?"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-booking" onclick="window.location.href='{{ url_for('confirm_booking') }}'";>
+                                                        <i class="fas fa-check-circle me-2"></i>Confirm Booking
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .booking-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 2rem 0 4rem;
+    }
+    
+    .booking-header {
+        background: linear-gradient(to right, rgba(41, 128, 185, 0.8), rgba(44, 62, 80, 0.8)), 
+                    url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        color: white;
+        border-radius: 0 0 50% 50% / 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .booking-header h1 {
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        color: white;
+        animation: fadeInDown 1s ease;
+    }
+    
+    .booking-header p {
+        animation: fadeInUp 1s ease;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .booking-card {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        background: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 1s ease;
+    }
+    
+    .booking-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .booking-image-container {
+        position: relative;
+        height: 100%;
+    }
+    
+    .booking-image {
+        background: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        height: 100%;
+        min-height: 100%;
+        border-radius: 20px 0 0 20px;
+        position: relative;
+    }
+    
+    .booking-features {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .feature {
+        color: white;
+        margin: 0.5rem;
+        text-align: center;
+        animation: fadeInUp 1s ease;
+    }
+    
+    .feature i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: #3498db;
+    }
+    
+    .booking-form-container {
+        padding: 2rem;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: #e74c3c;
+    }
+    
+    .form-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #3498db;
+        transition: all 0.3s ease;
+    }
+    
+    .form-section:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(5px);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .input-group-text {
+        background: linear-gradient(45deg, #3498db, #2c3e50);
+        color: white;
+        border: none;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid #e1e8ed;
+        padding: 0.75rem;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+    }
+    
+    .btn-booking {
+        background: linear-gradient(45deg, #3498db, #2c3e50);
+        color: white;
+        padding: 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    
+    .btn-booking:hover {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+        color: white;
+    }
+    
+    .complete-booking-section {
+        border-left: 4px solid #e74c3c;
+    }
+    
+    .complete-booking-image-container {
+        position: relative;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .complete-booking-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .complete-booking-image-container:hover .complete-booking-image {
+        transform: scale(1.05);
+    }
+    
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-weight: 600;
+    }
+    
+    .image-overlay i {
+        color: #2ecc71;
+        margin-right: 5px;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .booking-card {
+            border-radius: 20px;
+        }
+        
+        .booking-form-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+
+<script>
+// Set minimum dates for check-in and check-out
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('check_in').min = today;
+    document.getElementById('check_out').min = today;
+
+    // Check room availability based on selected room type and date
+    document.getElementById('room_type').addEventListener('change', checkRoomAvailability);
+    document.getElementById('check_in').addEventListener('change', checkRoomAvailability);
+
+    function checkRoomAvailability() {
+        const roomType = document.getElementById('room_type').value;
+        const checkInDate = document.getElementById('check_in').value;
+        
+        if (!checkInDate || !roomType) return;
+
+        // Fetch the available date for the selected room type from backend
+        fetch(`/check_availability/${roomType}/${checkInDate}`)
+            .then(response => response.json())
+            .then(data => {
+                const availabilityMessage = document.getElementById('availability_message');
+                const availabilityStatus = document.getElementById('room_availability_status');
+
+                if (data.available) {
+                    availabilityMessage.textContent = `Room available for the selected dates.`;
+                    availabilityMessage.classList.remove('text-danger');
+                    availabilityMessage.classList.add('text-success');
+                } else {
+                    availabilityMessage.textContent = `This room is not available on the selected dates.`;
+                    availabilityMessage.classList.remove('text-success');
+                    availabilityMessage.classList.add('text-danger');
+                }
+            });
+    }
+});
+</script>
+
+{% endblock %}

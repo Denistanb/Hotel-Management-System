@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Room Access</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Manage Rooms</h2>
+    <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+
+    <table border="1">
+        <tr>
+            <th>Room Number</th>
+            <th>Status</th>
+            <th>Free Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.room_number }}</td>
+            <td>{{ room.status }}</td>
+            <td>{{ room.free_date if room.free_date else "N/A" }}</td>
+            <td>
+                {% if room.status == "available" %}
+                    <form method="POST" action="{{ url_for('lock_room', room_number=room.room_number) }}" onsubmit="convertDate(event, this)">
+                        <input type="date" name="free_date" id="free_date_{{ room.room_number }}" required>
+                        <input type="hidden" name="free_date_iso" id="free_date_iso_{{ room.room_number }}">
+                        <button type="submit">Lock</button>
+                    </form>
+                {% elif room.status == "locked" %}
+                    <form method="POST" action="{{ url_for('release_room', room_number=room.room_number) }}">
+                        <button type="submit">Release</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function convertDate(event, form) {
+            event.preventDefault();
+
+            // Get the selected date
+            let dateInput = form.querySelector('input[name="free_date"]').value;
+            if (!dateInput) {
+                alert("Please select a date.");
+                return;
+            }
+
+            // Convert to ISO format with time (assuming midnight)
+            let isoDate = new Date(dateInput + "T00:00:00.000Z").toISOString();
+
+            // Set the hidden field value
+            form.querySelector('input[name="free_date_iso"]').value = isoDate;
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+</html>

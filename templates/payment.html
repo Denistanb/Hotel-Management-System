@@ -1,0 +1,89 @@
+<!-- templates/payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Selection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .payment-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: auto;
+            max-width: 600px;
+        }
+        .payment-option {
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-option:hover {
+            border-color: #4ECDC4;
+            transform: translateY(-5px);
+        }
+        .total-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2D3047;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-container">
+            <h2 class="text-center mb-4">Complete Your Booking</h2>
+            <div class="total-display text-center">
+                Total Amount: ${{ total_cost }}
+            </div>
+            
+            <form method="POST" action="{{ url_for('confirm_booking') }}">
+                <input type="hidden" name="room_number" value="{{ room_number }}">
+                <input type="hidden" name="check_in" value="{{ check_in }}">
+                <input type="hidden" name="check_out" value="{{ check_out }}">
+                <input type="hidden" name="num_persons" value="{{ num_persons }}">
+                <input type="hidden" name="total_cost" value="{{ total_cost }}">
+                <input type="hidden" name="room_type" value="{{ room_type }}">
+
+                <div class="payment-option" onclick="this.querySelector('button').click()">
+                    <h4>💰 Cash on Delivery</h4>
+                    <p>Pay when you arrive at the hotel</p>
+                    <button type="submit" name="payment_method" value="cash_on_delivery" class="d-none"></button>
+                </div>
+
+                <div class="payment-option" onclick="document.getElementById('card-details').classList.toggle('d-none')">
+                    <h4>💳 Online Payment</h4>
+                    <div id="card-details" class="d-none mt-3">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Card Number" disabled>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="MM/YY" disabled>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="CVV" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" name="payment_method" value="online" class="btn btn-success w-100 mt-3">
+                        Complete Payment (Dummy)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

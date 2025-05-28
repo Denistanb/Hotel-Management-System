@@ -1,0 +1,424 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-header">
+        <h1 class="text-center">Booking Confirmed!</h1>
+        <p class="text-center lead">Your luxury experience awaits</p>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="confirmation-card">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    
+                    <div class="booking-details">
+                        <h2>Thank You for Your Reservation</h2>
+                        <p class="confirmation-message">We're excited to welcome you to Luxury Stays. Your booking has been confirmed and we've sent the details to your email.</p>
+                        
+                        <div class="token-container">
+                            <div class="token-label">Your Booking Token</div>
+                            <div class="token-value">{{ user_token }}</div>
+                            <div class="token-info">Please save this token for future reference</div>
+                        </div>
+                        
+                        <div class="confirmation-features">
+                            <div class="feature">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Confirmed</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email Sent</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-concierge-bell"></i>
+                                <span>24/7 Support</span>
+                            </div>
+                        </div>
+                        
+                        <div class="next-steps">
+                            <h4>What's Next?</h4>
+                            <ul>
+                                <li><i class="fas fa-clock"></i> Prepare for check-in at 10:00 AM on your arrival date</li>
+                                <li><i class="fas fa-id-card"></i> Bring a valid ID for verification</li>
+                                <li><i class="fas fa-credit-card"></i> Payment will be collected upon arrival</li>
+                                <li><i class="fas fa-money-bill-wave"></i> Pay upon arrival at the front desk</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="confirmation-actions">
+                            <a href="{{ url_for('home') }}" class="btn btn-home">
+                                <i class="fas fa-home me-2"></i>Return Home
+                            </a>
+                            <button onclick="copyToken()" class="btn btn-copy">
+                                <i class="fas fa-copy me-2"></i>Copy Token
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyToken() {
+    const token = "{{ booking_token }}";
+    navigator.clipboard.writeText(token).then(function() {
+        // Create a toast notification instead of an alert
+        const toast = document.createElement('div');
+        toast.className = 'copy-toast';
+        toast.innerHTML = '<i class="fas fa-check me-2"></i>Token copied to clipboard!';
+        document.body.appendChild(toast);
+        
+        // Animate the toast
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        
+        // Remove the toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 500);
+        }, 3000);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add animation to the confirmation card
+    const card = document.querySelector('.confirmation-card');
+    setTimeout(() => {
+        card.classList.add('animate');
+    }, 100);
+    
+    // Add staggered animation to features
+    const features = document.querySelectorAll('.feature');
+    features.forEach((feature, index) => {
+        setTimeout(() => {
+            feature.classList.add('animate');
+        }, 500 + (index * 200));
+    });
+    
+    // Add animation to next steps
+    const steps = document.querySelectorAll('.next-steps li');
+    steps.forEach((step, index) => {
+        setTimeout(() => {
+            step.classList.add('animate');
+        }, 1000 + (index * 200));
+    });
+});
+</script>
+
+<style>
+.confirmation-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem 0 4rem;
+    min-height: 100vh;
+}
+
+.confirmation-header {
+    background: linear-gradient(to right, rgba(41, 128, 185, 0.8), rgba(44, 62, 80, 0.8)), 
+                url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    color: white;
+    border-radius: 0 0 50% 50% / 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-header h1 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: white;
+    animation: fadeInDown 1s ease;
+}
+
+.confirmation-header p {
+    animation: fadeInUp 1s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.confirmation-card.animate {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.success-icon {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    z-index: 10;
+}
+
+.success-icon i {
+    font-size: 40px;
+    color: white;
+}
+
+.booking-details {
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+}
+
+.confirmation-message {
+    color: #7f8c8d;
+    margin-bottom: 2rem;
+}
+
+.token-container {
+    background: linear-gradient(45deg, #3498db, #2c3e50);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 10px 20px rgba(52, 152, 219, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.token-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+.token-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.token-value {
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.token-info {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.confirmation-features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.feature.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature i {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 0.5rem;
+}
+
+.feature span {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.next-steps {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.next-steps h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.next-steps li {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+.next-steps li.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.next-steps li i {
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    color: #3498db;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-home, .btn-copy {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-home {
+    background: linear-gradient(45deg, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-home:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+    color: white;
+}
+
+.btn-copy {
+    background: transparent;
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.btn-copy:hover {
+    background: rgba(52, 152, 219, 0.1);
+    transform: translateY(-3px);
+}
+
+.copy-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2ecc71;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.copy-toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .confirmation-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .feature {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .feature i {
+        margin-bottom: 0;
+    }
+    
+    .confirmation-actions {
+        flex-direction: column;
+    }
+    
+    .btn-home, .btn-copy {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">🏆 Rewards & Awards 🎉</h2>
+
+    <!-- {% set room_counts = {} %}
+    {% for booking in new_bookings %}
+        {% set _ = room_counts.update({booking.room_type: room_counts.get(booking.room_type, 0) + 1}) %}
+    {% endfor %}
+
+    {% set ssb_count = room_counts.get('SSB', 0) %}
+    {% set sdb_count = room_counts.get('SDB', 0) %}
+
+    <div class="card p-4 mt-3 border border-warning">
+        <h4>Your Booking Summary:</h4>
+        <p><strong>SSB Bookings:</strong> {{ ssb_count }}</p>
+        <p><strong>SDB Bookings (Last 3 Months):</strong> {{ sdb_count }}</p>
+    </div> -->
+
+    <div class="card p-4 mt-3 border border-warning">
+        <h4>📜 Your Approved Bookings:</h4>
+        {% if new_bookings %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Room Type</th>
+                        <th>User Token</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in new_bookings %}
+                        <tr>
+                            <td>{{ booking.room_type }}</td>
+                            <td>{{ booking.user_token }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h5>Total Bookings: {{ new_bookings | length }}</h5>
+
+            <h5>Room Type Counts:</h5>
+            <ul>
+                {% for room_type, count in room_counts.items() %}
+                    <li>{{ room_type }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No approved bookings found.</p>
+        {% endif %}
+    </div>
+
+    <div class="card p-4 mt-3 border border-warning">
+        <h4>🎁 Reward Criteria:</h4>
+        <ul>
+            <li>📌 <strong>SSB:</strong> Book 3 times → 4th booking is <b>FREE!</b></li>
+            <li>📌 <strong>SDB:</strong> Book 3 times → 4th booking is <b>FREE!</b></li>
+        </ul>
+    </div>
+
+    <div class="card p-4 mt-3 border border-warning">
+        {% set ssb_count = room_counts.get('Standard Room - Single Bed',0) %}
+        {% set sdb_count = room_counts.get('Standard Room - Double Bed',0) %}
+        <h4>🎯 Your Rewards:</h4>
+        {% if ssb_count >= 3 %}
+            <p>🎉 <strong>Congratulations!</strong> You have earned a <b>free SSB room</b> for your next stay! 🎊</p>
+        {% else %}
+            <p>❌ You need <strong>{{3 - ssb_count }}</strong> more SSB bookings to earn a free room.</p>
+        {% endif %}
+
+        {% if sdb_count >= 3 %}
+            <p>🏆 <strong>Great news!</strong> You have earned a <b>free SDB room</b> for your next stay! 🎊</p>
+        {% else %}
+            <p>❌ You need <strong>{{3 - sdb_count}}</strong> more SDB bookings to earn a free room.</p>
+        {% endif %}
+    </div>
+
+    <div class="card p-4 mt-3 border border-warning">
+        <h4>✅ How to Claim Your Reward?</h4>
+        <p>Once you book your free room, the <strong>admin (hotel receptionist)</strong> will verify and approve your reward at check-in. Only after approval, the room will be assigned to you and Booking summary will be incremented.</p>
+        <p class="text-success">📝 Make sure to inform the receptionist about your reward at check-in!</p>
+    </div>
+</div>
+{% endblock %}

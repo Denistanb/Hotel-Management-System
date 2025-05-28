@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="register-container">
+    <div class="register-header">
+        <h1 class="text-center">Join Our Luxury Experience</h1>
+        <p class="text-center lead">Create an account to unlock exclusive benefits</p>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="register-card">
+                    <div class="row g-0">
+                        <div class="col-md-5 register-image-container d-none d-md-block">
+                            <div class="register-image"></div>
+                            <div class="register-benefits">
+                                <h4><i class="fas fa-star"></i> Member Benefits</h4>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Exclusive room rates</li>
+                                    <li><i class="fas fa-check-circle"></i> Priority booking</li>
+                                    <li><i class="fas fa-check-circle"></i> Free room upgrades</li>
+                                    <li><i class="fas fa-check-circle"></i> Personalized service</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="register-form-container">
+                                <h2 class="text-center mb-4">Create Your Account</h2>
+                                <form method="POST" action="{{ url_for('register') }}" onsubmit="return validateForm(event)" class="register-form">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="name" class="form-label">Full Name</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="email" name="email" 
+                                                       placeholder="Enter your email" required>
+                                            </div>
+                                            <div id="email-feedback" class="invalid-feedback" style="display: none;"></div>
+                                        </div>                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" placeholder="10-digit number" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+                                            </div>
+                                            <div id="password-feedback" class="invalid-feedback" style="display: none;"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+                                            </div>
+                                            <div id="password-match-feedback" class="invalid-feedback" style="display: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="#" class="terms-link">Terms and Conditions</a>
+                                        </label>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-register">Create Account</button>
+                                    </div>
+                                </form>
+                                <div class="text-center mt-3 login-link">
+                                    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .register-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 2rem 0 4rem;
+        min-height: 100vh;
+    }
+    
+    .register-header {
+        background: linear-gradient(to right, rgba(142, 68, 173, 0.8), rgba(41, 128, 185, 0.8)), 
+                    url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        color: white;
+        border-radius: 0 0 50% 50% / 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .register-header h1 {
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        color: white;
+        animation: fadeInDown 1s ease;
+    }
+    
+    .register-header p {
+        animation: fadeInUp 1s ease;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .register-card {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        background: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 1s ease;
+    }
+    
+    .register-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .register-image-container {
+        position: relative;
+        height: 100%;
+    }
+    
+    .register-image {
+        background: url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        height: 100%;
+        min-height: 500px;
+        position: relative;
+    }
+    
+    .register-benefits {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1.5rem;
+        color: white;
+    }
+    
+    .register-benefits h4 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        color: #f1c40f;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .register-benefits ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .register-benefits li {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: fadeInRight 1s ease;
+    }
+    
+    .register-benefits li i {
+        color: #2ecc71;
+    }
+    
+    .register-form-container {
+        padding: 2rem;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .input-group-text {
+        background: linear-gradient(45deg, #9b59b6, #3498db);
+        color: white;
+        border: none;
+    }
+    
+    .form-control {
+        border: 2px solid #e1e8ed;
+        padding: 0.75rem;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .form-control:focus {
+        border-color: #9b59b6;
+        box-shadow: 0 0 0 0.25rem rgba(155, 89, 182, 0.25);
+    }
+    
+    .form-check-input:checked {
+        background-color: #9b59b6;
+        border-color: #9b59b6;
+    }
+    
+    .terms-link {
+        color: #9b59b6;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .terms-link:hover {
+        text-decoration: underline;
+    }
+    
+    .btn-register {
+        background: linear-gradient(45deg, #9b59b6, #3498db);
+        color: white;
+        padding: 0.75rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+    }
+    
+    .btn-register:hover {
+        background: linear-gradient(45deg, #8e44ad, #2980b9);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(155, 89, 182, 0.6);
+        color: white;
+    }
+    
+    .login-link a {
+        color: #9b59b6;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .login-link a:hover {
+        color: #8e44ad;
+        text-decoration: underline;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .register-card {
+            border-radius: 20px;
+        }
+        
+        .register-form-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    function validateForm(event) {
+        let isValid = true;
+    
+        // Email Validation (Only Allow "gmail.com")
+        var email = document.getElementById("email").value.trim();
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        var emailField = document.getElementById("email");
+        var emailFeedback = document.getElementById("email-feedback");
+    
+        if (!emailPattern.test(email)) {
+            emailField.classList.add("is-invalid"); // Add Bootstrap error style
+            emailFeedback.innerText = "Please enter valid email id.";
+            emailFeedback.style.display = "block"; // Ensure visibility
+            isValid = false;
+        } else {
+            emailField.classList.remove("is-invalid");
+            emailFeedback.innerText = "";
+            emailFeedback.style.display = "none"; // Hide message if valid
+        }
+        
+    
+        // Password Match Validation
+        var password = document.getElementById("password").value;
+    var confirm_password = document.getElementById("confirm_password").value;
+    var passwordFeedback = document.getElementById("password-feedback");
+    var confirmPasswordFeedback = document.getElementById("password-match-feedback");
+
+    var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordPattern.test(password)) {
+        document.getElementById("password").classList.add("is-invalid");
+        passwordFeedback.innerText = "Password must be at least 8 characters, include a capital letter, a number, and a special character.";
+        passwordFeedback.style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("password").classList.remove("is-invalid");
+        passwordFeedback.innerText = "";
+        passwordFeedback.style.display = "none";
+    }
+
+    // Confirm Password Validation
+    if (password !== confirm_password) {
+        document.getElementById("confirm_password").classList.add("is-invalid");
+        confirmPasswordFeedback.innerText = "Passwords do not match!";
+        confirmPasswordFeedback.style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("confirm_password").classList.remove("is-invalid");
+        confirmPasswordFeedback.innerText = "";
+        confirmPasswordFeedback.style.display = "none";
+    }
+
+    
+        // Prevent backend call if validation fails
+        if (!isValid) {
+            event.preventDefault(); // 🚫 Stops form submission
+            return false; // Stops further execution
+        }
+    
+        return true; // ✅ Backend is called only if everything is valid
+    }
+    
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add staggered animation to benefits list items
+    const benefits = document.querySelectorAll('.register-benefits li');
+    benefits.forEach((benefit, index) => {
+        benefit.style.animationDelay = `${0.3 * (index + 1)}s`;
+    });
+    
+    // Real-time password validation
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const feedback = document.getElementById('password-match-feedback');
+    
+    confirmPassword.addEventListener('input', function() {
+        if (this.value !== password.value) {
+            this.classList.add('is-invalid');
+            feedback.style.display = 'block';
+        } else {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+            feedback.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

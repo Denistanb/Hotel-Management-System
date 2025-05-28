@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="text-center">Welcome Back</h1>
+        <p class="text-center lead">Sign in to access your luxury experience</p>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="login-card">
+                    <div class="row g-0">
+                        <div class="col-md-6 login-image-container d-none d-md-block">
+                            <div class="login-image"></div>
+                            <div class="login-features">
+                                <div class="feature">
+                                    <i class="fas fa-lock"></i>
+                                    <span>Secure Access</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-history"></i>
+                                    <span>Booking History</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-percent"></i>
+                                    <span>Member Discounts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="login-form-container">
+                                <h2 class="text-center mb-4">Login to Your Account</h2>
+                                <form method="POST" action="{{ url_for('login') }}" class="login-form">
+                                    <div class="mb-4 form-section">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-login">Sign In</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-center mt-3 register-link">
+                                    <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 2rem 0 4rem;
+        min-height: 100vh;
+    }
+    
+    .login-header {
+        background: linear-gradient(to right, rgba(41, 128, 185, 0.8), rgba(44, 62, 80, 0.8)), 
+                    url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        color: white;
+        border-radius: 0 0 50% 50% / 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .login-header h1 {
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        color: white;
+        animation: fadeInDown 1s ease;
+    }
+    
+    .login-header p {
+        animation: fadeInUp 1s ease;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .login-card {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        background: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 1s ease;
+    }
+    
+    .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .login-image-container {
+        position: relative;
+        height: 100%;
+    }
+    
+    .login-image {
+        background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        height: 100%;
+        min-height: 400px;
+        border-radius: 20px 0 0 20px;
+        position: relative;
+    }
+    
+    .login-features {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .feature {
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        animation: fadeInRight 1s ease;
+    }
+    
+    .feature:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature i {
+        font-size: 1.2rem;
+        color: #3498db;
+    }
+    
+    .login-form-container {
+        padding: 2.5rem 2rem;
+    }
+    
+    .form-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 15px;
+        border-left: 4px solid #3498db;
+        transition: all 0.3s ease;
+    }
+    
+    .form-section:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(5px);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .input-group-text {
+        background: linear-gradient(45deg, #3498db, #2c3e50);
+        color: white;
+        border: none;
+    }
+    
+    .form-control {
+        border: 2px solid #e1e8ed;
+        padding: 0.75rem;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+    }
+    
+    .btn-login {
+        background: linear-gradient(45deg, #3498db, #2c3e50);
+        color: white;
+        padding: 0.75rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    
+    .btn-login:hover {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+        color: white;
+    }
+    
+    .register-link a {
+        color: #3498db;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .register-link a:hover {
+        color: #2c3e50;
+        text-decoration: underline;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .login-card {
+            border-radius: 20px;
+        }
+        
+        .login-form-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add staggered animation to features
+    const features = document.querySelectorAll('.feature');
+    features.forEach((feature, index) => {
+        feature.style.animationDelay = `${0.3 * (index + 1)}s`;
+    });
+    
+    // Add animation to form
+    const form = document.querySelector('.form-section');
+    setTimeout(() => {
+        form.classList.add('fade-in');
+    }, 500);
+});
+
+
+
+    if (window.history && window.history.pushState) {
+        window.history.pushState('forward', null, './');
+        window.history.forward(1);
+    }
+
+    
+</script>
+{% endblock %}

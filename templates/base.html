@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Hotel Booking</title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            margin-top: 100px;
+            --primary: #0A1A2F; /* Deep Navy */
+            --secondary: #FFD700; /* Gold */
+            --accent: #FF6B6B; /* Coral */
+            --light: #F4F0E6; /* Cream */
+            --dark: #1E1E1E; /* Dark Gray */
+            --gradient-primary: linear-gradient(135deg, #0A1A2F 0%, #1E1E1E 100%);
+            --gradient-secondary: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            --gradient-accent: linear-gradient(135deg, #FF6B6B 0%, #FF4500 100%);
+        }
+    
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            padding-top: 80px;
+        }
+    
+        /* Enhanced Navbar */
+        .navbar {
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 0.8rem 0;
+        }
+    
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--secondary) !important;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+    
+        .navbar-brand i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+    
+        .nav-link {
+            color: var(--light) !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+    
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+    
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    
+        .auth-button {
+            padding: 0.5rem 1.5rem !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+    
+        .login-button {
+            background: var(--gradient-secondary);
+            color: var(--primary) !important;
+        }
+    
+        .logout-button {
+            background: var(--gradient-accent);
+            color: var(--light) !important;
+        }
+    
+        /* Modern Flash Messages */
+        .alert {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+    
+        .alert-success {
+            border-left: 5px solid #28a745;
+        }
+    
+        .alert-danger {
+            border-left: 5px solid #dc3545;
+        }
+    
+        /* Enhanced Footer */
+        footer {
+            background: var(--gradient-primary);
+            color: var(--light);
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+    
+        footer h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+    
+        footer a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+    
+        footer a:hover {
+            color: var(--secondary);
+        }
+    
+        .social-icons {
+            margin-top: 1.5rem;
+        }
+    
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+    
+        .social-icons a:hover {
+            transform: translateY(-5px) scale(1.2);
+        }
+    
+        /* User Token Display */
+        .user-token {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid var(--secondary);
+        }
+    
+        .user-token button {
+            background: var(--gradient-secondary);
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    
+        .user-token button:hover {
+            transform: scale(1.1);
+        }
+    
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--gradient-secondary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+    
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+    
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    
+        /* Hover Effects */
+        .hover-glow {
+            transition: box-shadow 0.3s ease;
+        }
+    
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+    
+        /* Gradient Buttons */
+        .btn-gradient {
+            background: var(--gradient-secondary);
+            color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+    
+        .btn-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+    
+        /* Card Design */
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+    
+        .luxury-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Hero Section */
+        .hero {
+            background: url('https://source.unsplash.com/1920x1080/?luxury-hotel') center/cover;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 26, 47, 0.6);
+        }
+    
+        .hero-content {
+            z-index: 1;
+            text-align: center;
+            color: var(--light);
+        }
+    
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+    
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <i class="fas fa-hotel"></i>LUXURY STAYS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('rooms') }}">Rooms</a>
+                    </li>
+                    {% if 'user_id' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('reserved') }}">My Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('rewards') }}">Rewards</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link auth-button logout-button" href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item ms-2">
+                            <a class="nav-link auth-button login-button" href="{{ url_for('login') }}">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' }} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    
+
+    <!-- Main Content -->
+    <main class="container fade-in">
+        {% block content %}{% endblock %}
+    </main>
+
+<!-- Luxury Cards Section -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="luxury-card p-4 text-center">
+                <i class="fas fa-bed fa-3x mb-3" style="color: var(--secondary);"></i>
+                <h3>Luxury Rooms</h3>
+                <p>Indulge in our spacious, elegantly designed rooms.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="luxury-card p-4 text-center">
+                <i class="fas fa-spa fa-3x mb-3" style="color: var(--secondary);"></i>
+                <h3>Spa & Wellness</h3>
+                <p>Relax and rejuvenate with our world-class spa services.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="luxury-card p-4 text-center">
+                <i class="fas fa-utensils fa-3x mb-3" style="color: var(--secondary);"></i>
+                <h3>Fine Dining</h3>
+                <p>Savor exquisite dishes prepared by our master chefs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Hero Section
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Luxury Stays</h1>
+        <p>Experience the pinnacle of comfort and elegance.</p>
+        <a href="{{ url_for('rooms') }}" class="btn btn-gradient">Explore Rooms</a>
+    </div>
+</section> -->
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>Luxury Experience</h5>
+                    <p class="mt-3">Discover unparalleled comfort in the heart of the city. Your perfect stay starts here.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-2"><a href="{{ url_for('home') }}"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="{{ url_for('rooms') }}"><i class="fas fa-chevron-right me-2"></i>Rooms</a></li>
+                        <li class="mb-2"><a href="{{ url_for('about') }}"><i class="fas fa-chevron-right me-2"></i>About</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <p><i class="fas fa-phone me-2"></i>+91 98765 43210</p>
+                        <p><i class="fas fa-envelope me-2"></i>contact@luxurystays.in</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-5">
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2025 Luxury Stays. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- User Token & Back to Top -->
+    {% if session.get('user_token') %}
+    <div class="user-token">
+        <strong>Your Token:</strong> {{ session.get('user_token') }}
+        <button onclick="navigator.clipboard.writeText('{{ session.get('user_token') }}')">
+            <i class="fas fa-copy"></i>
+        </button>
+    </div>
+    {% endif %}
+
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Bootstrap components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Scroll reveal animations
+            ScrollReveal().reveal('.fade-in', {
+                delay: 200,
+                distance: '20px',
+                origin: 'bottom',
+                easing: 'cubic-bezier(0.5, 0, 0, 1)',
+            });
+        });
+    </script>
+</body>
+</html>

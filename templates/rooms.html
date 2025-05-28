@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUX Hotel Rooms</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2D3047;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-weight: 600;
+            color: var(--dark);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+        }
+
+        .room-card {
+            margin: 1rem;
+            border: none;
+            border-radius: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .available {
+            background: linear-gradient(135deg, #4ECDC4 0%, #45b7af 100%);
+            color: white;
+        }
+
+        .booked {
+            background: linear-gradient(135deg, #FF6B6B 0%, #ff5252 100%);
+            color: white;
+        }
+
+        .card-body {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .btn-book-now {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-book-now:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 230, 109, 0.4);
+        }
+
+        .btn-book-now i {
+            margin-right: 0.5rem;
+        }
+
+        .booking-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control {
+            border-radius: 25px;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(255, 230, 109, 0.5);
+        }
+
+        .room-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent);
+            color: var(--dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            left: -30px;
+            transform: rotate(-45deg);
+            padding: 0.5rem 2rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-icon {
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .booking-form {
+            display: none; /* Hide form by default */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .badge.bg-dark {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+    word-wrap: break-word; /* Ensures long text wraps properly */
+    white-space: normal; /* Ensures line breaks within text */
+}
+
+
+.payment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 mb-3">🌟 Luxury Rooms at LUX Hotel 🌟</h1>
+            <div class="hero-icon">
+                <i class="fas fa-hotel"></i>
+                <i class="fas fa-concierge-bell mx-4"></i>
+                <i class="fas fa-spa"></i>
+            </div>
+        </div>
+        <a href="/" style="
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 25px;
+    background: #4ECDC4;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 2px solid #3aa99e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+">
+    ⬅️ Back to Home
+</a>
+
+
+
+
+
+
+<div class="row">
+    {% for room in rooms %}
+        <div class="col-lg-4 col-md-6">
+            <div class="room-card {{ 'available' if room.status == 'available' else 'booked' }}">
+                <div class="card-body">
+                    <div class="room-number">{{ room.room_number }}</div>
+                    <div class="status-badge bg-dark">{{ room.room_type }}</div>
+                    
+                    <h3 class="card-title mb-4">{{ room.room_type }} Suite</h3>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="price mb-0">
+                            <i class="fas fa-tag"></i> ${{ room.room_number }}
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="price mb-0">
+                            <i class="fas fa-tag"></i> ${{ room.price_per_day }}/night
+                        </p>
+                    </div>
+
+                    {% if room.status == 'available' %}
+                        <button class="btn btn-book-now" onclick="showBookingForm('{{ room.room_number }}')">
+                            <i class="fas fa-calendar-check"></i> Book Now
+                        </button>
+
+                        <form method="POST" action="{{ url_for('rooms') }}" class="booking-form" id="booking-form-{{ room.room_number }}" style="display: none;">
+>
+                            <input type="hidden" name="room_number" value="{{ room.room_number }}">
+
+                            <div class="mb-3">
+                                <label class="form-label">Check-in Date</label>
+                                <input type="date" id="check_in_{{ room.room_number }}" name="check_in" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Check-out Date</label>
+                                <input type="date" id="check_out_{{ room.room_number }}" name="check_out" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Guests (1-4)</label>
+                                <input type="number" name="num_persons" class="form-control" min="1" max="4" required>
+                            </div>
+
+                            <p class="text-muted">Minimum stay is 1 day.Check-in at or after 10 AM and Check-out at or before 10 AM.Check-out must be atleast one day greater than check-in day.</p>
+
+                            <button type="submit" class="btn btn-book-now w-100">
+                                <i class="fas fa-lock"></i> Confirm Booking
+                            </button>
+                        </form>
+                    {% elif room.status == 'booked' %}
+                        <div class="text-center">
+                            <div class="badge bg-dark mb-3">
+                                <i class="fas fa-calendar-times me-2"></i> Booked Until {{ room.free_date.strftime('%b %d') }}. <br>
+                                Available from {{ room.free_date.strftime(' %d ') }}   10:00 AM
+                            </div>
+                            <button class="btn btn-secondary w-100" disabled>
+                                <i class="fas fa-lock"></i> Unavailable
+                            </button>
+                        </div>
+                    {% else %}
+                        <div class="text-center">
+                            <div class="badge bg-dark mb-3">
+                                <i class="fas fa-calendar-times me-2"></i> Under Maintenance {{ room.free_date.strftime('%b %d') }}.<br>
+                                Available from {{ room.free_date.strftime(' %d ') }}  10:00 AM
+                            </div>
+                            <button class="btn btn-secondary w-100" disabled>
+                                <i class="fas fa-lock"></i> Unavailable
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<script>
+    function showBookingForm(roomNumber) {
+        console.log("showBookingForm triggered for room:", roomNumber);  // Debugging log
+        const form = document.getElementById(`booking-form-${roomNumber}`);
+        if (!form) {
+            console.log(`Form with id booking-form-${roomNumber} not found!`);
+            return;
+        }
+        console.log("Form element found:", form); // Check if form element is found
+        
+        // Toggle form visibility
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        document.querySelectorAll('.booking-form').forEach(otherForm => {
+            if (otherForm.id !== `booking-form-${roomNumber}`) {
+                otherForm.style.display = 'none';
+            }
+        });
+    }
+
+    function setMinDate() {
+        const today = new Date();
+        const todayFormatted = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    
+        // Set minimum check-in date to today
+        document.querySelectorAll("input[name='check_in']").forEach(input => {
+            input.setAttribute('min', todayFormatted);
+            input.addEventListener("change", function () {
+                updateCheckOutMinDate(this);
+            });
+        });
+    
+        // Function to update the min check-out date dynamically
+        function updateCheckOutMinDate(checkInInput) {
+            const checkInDate = new Date(checkInInput.value);
+            const minCheckOutDate = new Date(checkInDate);
+            minCheckOutDate.setDate(minCheckOutDate.getDate() + 1); // Check-out must be AFTER check-in
+            const minCheckOutFormatted = minCheckOutDate.toISOString().split('T')[0];
+    
+            const checkOutInput = checkInInput.closest(".booking-form").querySelector("input[name='check_out']");
+            if (checkOutInput) {
+                checkOutInput.setAttribute('min', minCheckOutDate);
+            }
+        }
+    
+        // Add form validation for check-out date
+        document.querySelectorAll('.booking-form').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                const checkInInput = form.querySelector("input[name='check_in']");
+                const checkOutInput = form.querySelector("input[name='check_out']");
+    
+                const checkInDate = new Date(checkInInput.value);
+                const checkOutDate = new Date(checkOutInput.value);
+    
+                if (!checkInInput.value || !checkOutInput.value) {
+                    event.preventDefault();
+                    alert("Please select both check-in and check-out dates.");
+                    return;
+                }
+    
+                // Ensure check-out date is on or after check-in date
+                if (checkOutDate < checkInDate) {
+                    event.preventDefault();
+                    alert("Check-out date cannot be before check-in date.");
+                    return;
+                }
+            });
+        });
+    }
+    
+    // Run function on page load
+    document.addEventListener("DOMContentLoaded", setMinDate);   
+
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

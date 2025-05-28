@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center py-5 mb-5" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center; background-size: cover;width: 100%; height: 500px; display: flex; align-items: center; justify-content: center; color: white; margin-top: -1.5rem; margin-bottom: 3rem !important;">
+    <div class="container">
+        {% if 'user_id' in session %}
+        <h1 class="display-3 mb-4 animate__animated animate__fadeInDown" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome Back!</h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Ready to book your next luxurious stay?</p>
+        {% else %}
+        <h1 class="display-3 mb-4 animate__animated animate__fadeInDown" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome to Luxury Stays</h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Experience unparalleled luxury and comfort in our premium accommodations</p>
+        {% endif %}
+        <a href="{{ url_for('booking') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp animate__delay-1s">Book Your Stay Now</a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center p-4 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-concierge-bell fa-3x mb-3 icon-animate" style="color: var(--accent-color);"></i>
+                    <h3 class="card-title">Premium Service</h3>
+                    <p class="card-text">Experience world-class service with our dedicated staff available 24/7.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center p-4 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-spa fa-3x mb-3 icon-animate" style="color: var(--secondary-color);"></i>
+                    <h3 class="card-title">Luxury Amenities</h3>
+                    <p class="card-text">Enjoy our premium amenities including spa, gym, and fine dining restaurants.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center p-4 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-map-marked-alt fa-3x mb-3 icon-animate" style="color: var(--accent-color);"></i>
+                    <h3 class="card-title">Prime Location</h3>
+                    <p class="card-text">Situated in the heart of the city with easy access to major attractions.</p>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <!-- Room Types Section -->
+    <h2 class="text-center mb-4 animate__animated animate__fadeIn">Our Luxurious Rooms</h2>
+    <div class="row mb-5">
+        <div class="col-md-6 mb-4">
+            <div class="card room-card hover-effect">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="card-img-top" alt="AC Room" style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title">AC Single-Bed Room</h4>
+                    <p class="card-text">Luxurious rooms with modern amenities and comfortable furnishings.</p>
+                    <!-- <a href="{{ url_for('booking') }}" class="btn btn-primary">Book Now</a> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card room-card hover-effect">
+                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="card-img-top" alt="Non-AC Room" style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title">AC Double-Bed Room</h4>
+                    <p class="card-text">Comfortable rooms with natural ventilation and all essential amenities.</p>
+                    <!-- <a href="{{ url_for('booking') }}" class="btn btn-primary">Book Now</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <h2 class="text-center mb-4 animate__animated animate__fadeIn">What Our Guests Say</h2>
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-quote-left fa-2x mb-3 icon-animate" style="color: var(--accent-color);"></i>
+                    <p class="card-text">"Absolutely amazing experience! The staff was incredibly helpful and the rooms were beautiful."</p>
+                    <footer class="blockquote-footer mt-3">John Doe</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-quote-left fa-2x mb-3 icon-animate" style="color: var(--accent-color);"></i>
+                    <p class="card-text">"Perfect location and exceptional service. Will definitely come back!"</p>
+                    <footer class="blockquote-footer mt-3">Jane Smith</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 hover-effect">
+                <div class="card-body">
+                    <i class="fas fa-quote-left fa-2x mb-3 icon-animate" style="color: var(--accent-color);"></i>
+                    <p class="card-text">"The amenities were top-notch and the staff went above and beyond to make our stay special."</p>
+                    <footer class="blockquote-footer mt-3">Mike Johnson</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    :root {
+        margin-top: 80px;
+        --primary-color: #2D3047; /* Navy */
+        --secondary-color: #FF6B6B; /* Coral */
+        --accent-color: #FFE66D; /* Gold */
+    }
+
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-effect:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .icon-animate {
+        transition: transform 0.3s ease;
+    }
+
+    .icon-animate:hover {
+        transform: scale(1.2);
+    }
+
+    .blockquote-footer {
+        color: var(--primary-color);
+    }
+
+    .animate__animated {
+        animation-duration: 1s;
+    }
+</style>
+
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- Script for Animations -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const elements = document.querySelectorAll('.animate__animated');
+        elements.forEach(el => {
+            el.style.opacity = '0';
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.classList.add(entry.target.dataset.animation);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        elements.forEach(el => {
+            observer.observe(el);
+        });
+
+
+    });
+
+
+
+    if (window.history && window.history.pushState) {
+        window.history.pushState('forward', null, './');
+        window.history.forward(1);
+    }
+
+</script>
+{% endblock %}

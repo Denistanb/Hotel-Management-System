@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Room Price List</title>
+</head>
+<body>
+
+    <h1>Room Price List</h1>
+    
+    <!-- Display the price list dynamically -->
+    <table class="price-table">
+        <tr>
+            <th>Room Type</th>
+            <th>Price (INR)</th>
+        </tr>
+        {% for room_type,price in result.items() %}
+            <tr>
+                <td>
+                    {% if room_type == 0 %}
+                        Standard Room - Single Bed
+                    {% else %}
+                        Standard Room - Double Bed
+                    {% endif %}
+                </td>
+                <td>₹{{ price["final_price"] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

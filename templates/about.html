@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="about-hero text-center py-5 mb-5" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center; background-size: cover; height: 400px; display: flex; align-items: center; justify-content: center; color: white; margin-top: -1.5rem;">
+    <div class="container">
+        <h1 class="display-4 mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">About Luxury Stays</h1>
+        <p class="lead" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Where Luxury Meets Comfort</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h2 class="mb-4">Our Story</h2>
+                    <p class="lead">Founded in 2023, Luxury Stays has been synonymous with exceptional hospitality and unparalleled luxury.</p>
+                    <p>We take pride in offering our guests the finest accommodations coupled with world-class service. Our commitment to excellence has earned us numerous accolades and the trust of thousands of satisfied guests.</p>
+                    <div class="mt-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-check-circle me-2" style="color: var(--accent-color);"></i>
+                            <span>24/7 Customer Service</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-check-circle me-2" style="color: var(--accent-color);"></i>
+                            <span>Luxury Amenities</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2" style="color: var(--accent-color);"></i>
+                            <span>Prime Location</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="card-img-top" alt="Hotel Lobby" style="height: 300px; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="row mb-5 text-center">
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <i class="fas fa-hotel fa-3x mb-3" style="color: var(--accent-color);"></i>
+                    <h3 class="counter">50+</h3>
+                    <p class="text-muted">Luxury Rooms</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                    <h3 class="counter">1000+</h3>
+                    <p class="text-muted">Happy Guests</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <i class="fas fa-star fa-3x mb-3" style="color: var(--accent-color);"></i>
+                    <h3 class="counter">4.8</h3>
+                    <p class="text-muted">Average Rating</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <i class="fas fa-award fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                    <h3 class="counter">7+</h3>
+                    <p class="text-muted">Awards Won</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <h2 class="text-center mb-4">Our Management Team</h2>
+    <div class="row mb-5">
+        <div class="col-md-3 mb-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCAXl5JZP8grXeEFnstUI0mTWHtbx63fxPnQ&s" class="rounded-circle mb-3" alt="Team Member" style="width: 150px; height: 150px; object-fit: cover;">
+                    <h4>Abinesh</h4>
+                    <p class="text-muted">General Manager</p>
+                    <div class="social-links">
+                        <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShi4c0FFUPTufDLkxssGK6HSAzR1dsbpErxJ5YANBHdVBCtTJp_EcDuZ0JCI5o_sWTnIY&usqp=CAU" class="rounded-circle mb-3" alt="Team Member" style="width: 150px; height: 150px; object-fit: cover;">
+                    <h4>Denistan</h4>
+                    <p class="text-muted">Operations Director</p>
+                    <div class="social-links">
+                        <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <img src="https://img.freepik.com/premium-photo/man-cartoon-hd-8k-wallpaper-stock-photographic-image_853645-28370.jpg" class="rounded-circle mb-3" alt="Team Member" style="width: 150px; height: 150px; object-fit: cover;">
+                    <h4>Mr. Jeevan</h4>
+                    <p class="text-muted">Customer Relations</p>
+                    <div class="social-links">
+                        <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvByitNdvbOCjhmyvhjtkOKDfDbr_fIsty_w&s" class="rounded-circle mb-3" alt="Team Member" style="width: 150px; height: 150px; object-fit: cover;">
+                    <h4>Abisheck</h4>
+                    <p class="text-muted">Finance Manager</p>
+                    <div class="social-links">
+                        <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+<style>
+    .counter {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+
+    .social-links a {
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: var(--accent-color) !important;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
